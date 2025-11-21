@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-size: 14px;
+  --background: #faf9f6;
+  --foreground: #1d3557;
+  --card: #ffffff;
+  --card-foreground: #1d3557;
+  --popover: #ffffff;
+  --popover-foreground: #1d3557;
+  --primary: #5d7183;
+  --primary-foreground: #ffffff;
+  --secondary: #a7b5c6;
+  --secondary-foreground: #1d3557;
+  --muted: #f7f8fa;
+  --muted-foreground: #5d7183;
+  --accent: #7ea8be;
+  --accent-foreground: #ffffff;
+  --border: #a7b5c6;
+  --input: transparent;
+  --input-background: #f7f8fa;
+  --ring: #5d7183;
+  --radius: 1rem;
+}
+
+html {
+  font-size: var(--font-size);
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  border-color: var(--border);
+  outline-color: var(--ring);
+}
+
+/* Touch-friendly interactions */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Better mobile scrolling */
+@media (max-width: 767px) {
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+}
