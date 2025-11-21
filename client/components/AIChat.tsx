@@ -295,7 +295,6 @@ What would you like to know?`;
                   >
                     {msg.role === 'bot' ? (
                       <ReactMarkdown
-                        className="markdown-content"
                         components={{
                           // Style headings
                           h1: ({ node, ...props }) => (
