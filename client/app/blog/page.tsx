@@ -7,14 +7,49 @@ import { OsebergFooter } from '@/components/OsebergFooter';
 import { BlogLink } from '@/components/BlogLink';
 import { CustomCursor } from '@/components/CustomCursor';
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://osebergexim.vercel.app';
+
 export const metadata: Metadata = {
   title: 'Blog | Oseberg Exim - Latest News and Insights',
-  description: 'Explore our latest blog posts about export-import business, agricultural products, spices, and more. Stay updated with industry insights and company news.',
-  keywords: 'blog, export import, agricultural products, spices, coffee, tea, makhana',
+  description: 'Explore our latest blog posts about export-import business, agricultural products, spices, coffee, tea, makhana, and more. Stay updated with industry insights, market trends, and company news from Oseberg Exim.',
+  keywords: [
+    'blog',
+    'export import blog',
+    'agricultural products blog',
+    'spices export',
+    'coffee export',
+    'tea export',
+    'makhana export',
+    'export import news',
+    'agricultural commodities',
+    'India export blog',
+    'industry insights',
+    'market trends'
+  ],
+  authors: [{ name: 'Oseberg Exim' }],
   openGraph: {
-    title: 'Blog | Oseberg Exim',
-    description: 'Explore our latest blog posts about export-import business',
+    title: 'Blog | Oseberg Exim - Latest News and Insights',
+    description: 'Explore our latest blog posts about export-import business, agricultural products, spices, and more. Stay updated with industry insights and company news.',
     type: 'website',
+    url: `${siteUrl}/blog`,
+    siteName: 'Oseberg Exim',
+    images: [
+      {
+        url: `${siteUrl}/og-image.jpg`,
+        width: 1200,
+        height: 630,
+        alt: 'Oseberg Exim Blog',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog | Oseberg Exim - Latest News and Insights',
+    description: 'Explore our latest blog posts about export-import business, agricultural products, and more.',
+    images: [`${siteUrl}/og-image.jpg`],
+  },
+  alternates: {
+    canonical: `${siteUrl}/blog`,
   },
 };
 

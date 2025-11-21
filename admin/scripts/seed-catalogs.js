@@ -6,7 +6,7 @@
 
 const { MongoClient } = require('mongodb');
 
-const MONGODB_URI = "mongodb+srv://harsh8423:8423047004@cluster0.1xbklyu.mongodb.net/";
+const MONGODB_URI = "";
 const DB_NAME = 'oseberg_exim';
 const COLLECTION_NAME = 'catalogs';
 

@@ -35,18 +35,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const imageUrl = post.image || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1200';
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://osebergexim.vercel.app';
+  const postUrl = `${siteUrl}/blog/${resolvedParams.slug}`;
+
   return {
     title: `${post.title} | Oseberg Exim Blog`,
     description: excerpt,
-    keywords: post.category ? `${post.category}, export import, blog` : 'export import, blog',
+    keywords: post.category 
+      ? `${post.category}, export import, blog, agricultural products, Oseberg Exim` 
+      : 'export import, blog, agricultural products, Oseberg Exim',
     authors: [{ name: post.author || 'Oseberg Exim' }],
     openGraph: {
       title: post.title,
       description: excerpt,
       type: 'article',
+      url: postUrl,
+      siteName: 'Oseberg Exim',
       publishedTime: post.createdAt,
       modifiedTime: post.updatedAt,
       authors: [post.author || 'Oseberg Exim'],
+      tags: post.category ? [post.category, 'export import', 'agricultural products'] : ['export import', 'agricultural products'],
       images: [
         {
           url: imageUrl,
@@ -61,9 +69,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: post.title,
       description: excerpt,
       images: [imageUrl],
+      creator: '@osebergexim',
     },
     alternates: {
-      canonical: `/blog/${resolvedParams.slug}`,
+      canonical: postUrl,
+    },
+    other: {
+      'article:author': post.author || 'Oseberg Exim',
+      'article:published_time': post.createdAt,
+      'article:modified_time': post.updatedAt,
+      'article:section': post.category || 'General',
     },
   };
 }
@@ -78,10 +93,50 @@ export default async function BlogPostPage({ params }: Props) {
     notFound();
   }
 
-  const shareUrl = `https://osebergexim.com/blog/${resolvedParams.slug}`;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://osebergexim.com';
+  const shareUrl = `${siteUrl}/blog/${resolvedParams.slug}`;
+  const imageUrl = post.image || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1200';
+  const excerpt = post.excerpt
+    ? post.excerpt.replace(/<[^>]*>/g, '').substring(0, 160)
+    : post.content
+    ? post.content.replace(/<[^>]*>/g, '').substring(0, 160)
+    : 'Read our latest blog post';
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": excerpt,
+    "image": imageUrl,
+    "datePublished": post.createdAt,
+    "dateModified": post.updatedAt || post.createdAt,
+    "author": {
+      "@type": "Person",
+      "name": post.author || "Oseberg Exim"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Oseberg Exim",
+      "url": siteUrl,
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${siteUrl}/logo.png`
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": shareUrl
+    },
+    "articleSection": post.category || "General",
+    "keywords": post.category ? `${post.category}, export import, agricultural products` : "export import, agricultural products"
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <CustomCursor />
       <OsebergHeader />
       <BlogPostContent

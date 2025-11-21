@@ -1,8 +1,17 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Admin Panel - Blog Manager",
-  description: "Manage your blog posts",
+  title: {
+    default: "Admin Panel - Oseberg Exim",
+    template: "%s | Oseberg Exim Admin"
+  },
+  description: "Oseberg Exim Admin Panel - Manage blogs, catalogs, and AI knowledge base. Content management system for Oseberg Exim export-import business.",
+  robots: {
+    index: false,
+    follow: false,
+    noarchive: true,
+    nosnippet: true,
+  },
 };
 
 export default function RootLayout({ children }) {
