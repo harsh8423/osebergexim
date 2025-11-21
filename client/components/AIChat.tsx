@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Bot, X, Send, Loader2, Mail } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 
 const quickQuestions = [
   { label: 'What products do you export?', key: 'products' },
@@ -286,13 +287,83 @@ What would you like to know?`;
                   className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] p-3 rounded-2xl whitespace-pre-line ${
+                    className={`max-w-[85%] p-3 rounded-2xl ${
                       msg.role === 'user'
                         ? 'bg-[#5D7183] text-white'
                         : 'bg-[#F7F8FA] text-[#1D3557] border border-[#A7B5C6]/20'
                     }`}
                   >
-                    {msg.text}
+                    {msg.role === 'bot' ? (
+                      <ReactMarkdown
+                        className="markdown-content"
+                        components={{
+                          // Style headings
+                          h1: ({ node, ...props }) => (
+                            <h1 className="text-lg font-bold mb-2 mt-2 first:mt-0" {...props} />
+                          ),
+                          h2: ({ node, ...props }) => (
+                            <h2 className="text-base font-bold mb-2 mt-2 first:mt-0" {...props} />
+                          ),
+                          h3: ({ node, ...props }) => (
+                            <h3 className="text-sm font-semibold mb-1 mt-2 first:mt-0" {...props} />
+                          ),
+                          // Style paragraphs
+                          p: ({ node, ...props }) => (
+                            <p className="mb-2 last:mb-0" {...props} />
+                          ),
+                          // Style lists
+                          ul: ({ node, ...props }) => (
+                            <ul className="list-disc list-inside mb-2 space-y-1" {...props} />
+                          ),
+                          ol: ({ node, ...props }) => (
+                            <ol className="list-decimal list-inside mb-2 space-y-1" {...props} />
+                          ),
+                          li: ({ node, ...props }) => (
+                            <li className="ml-4" {...props} />
+                          ),
+                          // Style links
+                          a: ({ node, ...props }) => (
+                            <a
+                              className="text-[#5D7183] underline hover:text-[#7EA8BE]"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              {...props}
+                            />
+                          ),
+                          // Style code blocks
+                          code: ({ node, className, ...props }: any) => {
+                            const isInline = !className;
+                            return isInline ? (
+                              <code className="bg-[#A7B5C6]/20 px-1 py-0.5 rounded text-sm font-mono" {...props} />
+                            ) : (
+                              <code className="block bg-[#A7B5C6]/10 p-2 rounded text-sm font-mono overflow-x-auto mb-2" {...props} />
+                            );
+                          },
+                          pre: ({ node, ...props }) => (
+                            <pre className="bg-[#A7B5C6]/10 p-2 rounded text-sm font-mono overflow-x-auto mb-2" {...props} />
+                          ),
+                          // Style blockquotes
+                          blockquote: ({ node, ...props }) => (
+                            <blockquote className="border-l-4 border-[#5D7183] pl-3 italic my-2" {...props} />
+                          ),
+                          // Style horizontal rules
+                          hr: ({ node, ...props }) => (
+                            <hr className="border-[#A7B5C6]/30 my-2" {...props} />
+                          ),
+                          // Style strong and emphasis
+                          strong: ({ node, ...props }) => (
+                            <strong className="font-bold" {...props} />
+                          ),
+                          em: ({ node, ...props }) => (
+                            <em className="italic" {...props} />
+                          ),
+                        }}
+                      >
+                        {msg.text}
+                      </ReactMarkdown>
+                    ) : (
+                      <span className="whitespace-pre-line">{msg.text}</span>
+                    )}
                   </div>
                   {msg.timestamp && (
                     <span className="text-xs text-[#A7B5C6] mt-1 px-1">
