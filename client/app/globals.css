@@ -102,12 +102,6 @@ body {
   outline-color: var(--ring);
 }
 
-/* Mobile-first: Enable cursor on desktop only */
-@media (min-width: 768px) {
-  * {
-    cursor: none !important;
-  }
-}
 
 /* Touch-friendly interactions */
 .touch-manipulation {

@@ -7,7 +7,6 @@ import { AIChat } from "@/components/AIChat";
 import { Blog } from "@/components/Blog";
 import { BlogPost } from "@/components/BlogPost";
 import { CatalogOverview } from "@/components/CatalogOverview";
-import { CustomCursor } from "@/components/CustomCursor";
 import { GlobalMap } from "@/components/GlobalMap";
 import { OsebergAbout } from "@/components/OsebergAbout";
 import { OsebergContact } from "@/components/OsebergContact";
@@ -53,7 +52,6 @@ export default function HomePage() {
       <PageLoader />
       <div className="min-h-screen bg-background overflow-x-hidden">
         <ScrollProgress />
-        <CustomCursor />
 
         {currentPage === "home" && (
           <>

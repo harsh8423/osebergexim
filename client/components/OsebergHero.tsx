@@ -1,6 +1,5 @@
 import { motion } from 'motion/react';
-import { ArrowRight, Globe, Package, TrendingUp } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { ArrowRight } from 'lucide-react';
 import { pseudoRandom } from '@/lib/random';
 
 const heroParticleSeeds = Array.from({ length: 20 }, (_, i) => i + 1);
@@ -24,6 +23,20 @@ export function OsebergHero() {
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#FAF9F6] via-[#F7F8FA] to-[#ECE2D0]">
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/video1.mp4" type="video/mp4" />
+      </video>
+      
+      {/* Dark overlay for blackish opacity */}
+      <div className="absolute inset-0 bg-black/60"></div>
+      
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Floating particles */}
@@ -77,19 +90,19 @@ export function OsebergHero() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 2xl:px-20 py-20 sm:py-24 md:py-32 relative z-10">
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-          {/* Left Content */}
+        <div className="flex items-center justify-center">
+          {/* Centered Content */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-6 sm:space-y-8"
+            className="space-y-6 sm:space-y-8 max-w-4xl text-center"
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-block px-3 py-1.5 sm:px-4 sm:py-2 glass rounded-full text-[#5D7183] text-xs sm:text-sm"
+              className="inline-block px-3 py-1.5 sm:px-4 sm:py-2 glass rounded-full text-white text-xs sm:text-sm"
             >
               🌍 Delivering Excellence Worldwide
             </motion.div>
@@ -98,17 +111,17 @@ export function OsebergHero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#1D3557] leading-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight"
             >
               Sourcing Excellence.
-              <span className="block text-[#5D7183]">Exporting Trust.</span>
+              <span className="block text-white/90">Exporting Trust.</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-base sm:text-lg md:text-xl text-[#5D7183] leading-relaxed"
+              className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed"
             >
               Oseberg Exim delivers India's finest agricultural products, spices, makhana, coffee, and tea to global markets with unmatched quality, consistency, and reliability.
             </motion.p>
@@ -117,11 +130,11 @@ export function OsebergHero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4"
+              className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4"
             >
               <motion.button
                 onClick={() => scrollToSection('contact')}
-                className="px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-[#5D7183] to-[#7EA8BE] text-white rounded-full shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base"
+                className="px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-[#5D7183] to-[#7EA8BE] text-white rounded-full shadow-lg flex items-center justify-center gap-2 text-sm sm:text-base font-medium"
                 whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(93, 113, 131, 0.3)' }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -131,7 +144,7 @@ export function OsebergHero() {
               
               <motion.button
                 onClick={() => scrollToSection('products')}
-                className="px-6 py-3 sm:px-8 sm:py-4 glass-strong text-[#1D3557] rounded-full border border-[#A7B5C6] flex items-center justify-center gap-2 text-sm sm:text-base"
+                className="px-6 py-3 sm:px-8 sm:py-4 bg-white/10 backdrop-blur-sm text-white rounded-full border border-white/30 flex items-center justify-center gap-2 text-sm sm:text-base font-medium hover:bg-white/20 transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -147,67 +160,17 @@ export function OsebergHero() {
               className="grid grid-cols-3 gap-4 sm:gap-6 pt-6 sm:pt-8"
             >
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-[#5D7183]">50+</div>
-                <div className="text-xs sm:text-sm text-[#1D3557] opacity-70">Countries</div>
+                <div className="text-2xl sm:text-3xl font-bold text-white">50+</div>
+                <div className="text-xs sm:text-sm text-white/70">Countries</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-[#5D7183]">1000+</div>
-                <div className="text-xs sm:text-sm text-[#1D3557] opacity-70">Shipments</div>
+                <div className="text-2xl sm:text-3xl font-bold text-white">1000+</div>
+                <div className="text-xs sm:text-sm text-white/70">Shipments</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl sm:text-3xl font-bold text-[#5D7183]">100%</div>
-                <div className="text-xs sm:text-sm text-[#1D3557] opacity-70">Quality</div>
+                <div className="text-2xl sm:text-3xl font-bold text-white">100%</div>
+                <div className="text-xs sm:text-sm text-white/70">Quality</div>
               </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Right - 3D Visual */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="relative mt-8 md:mt-0"
-          >
-            {/* Main image */}
-            <motion.div
-              className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity }}
-            >
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1596434220574-9af8bf9a0891?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXJnbyUyMHNoaXAlMjBjb250YWluZXIlMjBleHBvcnR8ZW58MXx8fHwxNzYzMTM0MjE2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                alt="Global Export"
-                className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1D3557]/50 to-transparent" />
-            </motion.div>
-
-            {/* Floating 3D cards - Hidden on very small screens, smaller on mobile */}
-            <motion.div
-              className="hidden sm:block absolute -top-3 -left-3 sm:-top-4 sm:-left-4 md:-top-6 md:-left-6 glass-strong p-2 sm:p-3 md:p-4 rounded-xl sm:rounded-2xl shadow-xl"
-              animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
-              transition={{ duration: 5, repeat: Infinity }}
-            >
-              <Globe className="text-[#5D7183]" size={24} />
-              <div className="text-xs sm:text-sm text-[#1D3557] mt-1 sm:mt-2">Global Reach</div>
-            </motion.div>
-
-            <motion.div
-              className="hidden sm:block absolute -bottom-3 -right-3 sm:-bottom-4 sm:-right-4 md:-bottom-6 md:-right-6 glass-strong p-2 sm:p-3 md:p-4 rounded-xl sm:rounded-2xl shadow-xl"
-              animate={{ y: [0, 15, 0], rotate: [0, -5, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity }}
-            >
-              <Package className="text-[#5D7183]" size={24} />
-              <div className="text-xs sm:text-sm text-[#1D3557] mt-1 sm:mt-2">Premium Quality</div>
-            </motion.div>
-
-            <motion.div
-              className="hidden md:block absolute top-1/2 -right-8 lg:-right-12 glass-strong p-2 sm:p-3 md:p-4 rounded-xl sm:rounded-2xl shadow-xl"
-              animate={{ x: [0, 10, 0], rotate: [0, 10, 0] }}
-              transition={{ duration: 6, repeat: Infinity }}
-            >
-              <TrendingUp className="text-[#D6A85E]" size={24} />
-              <div className="text-xs sm:text-sm text-[#1D3557] mt-1 sm:mt-2">Growth</div>
             </motion.div>
           </motion.div>
         </div>
@@ -219,9 +182,9 @@ export function OsebergHero() {
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <div className="w-6 h-10 border-2 border-[#5D7183] rounded-full flex items-start justify-center p-2">
+        <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
           <motion.div
-            className="w-1.5 h-1.5 bg-[#5D7183] rounded-full"
+            className="w-1.5 h-1.5 bg-white/70 rounded-full"
             animate={{ y: [0, 16, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           />
