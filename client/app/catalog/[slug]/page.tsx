@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ProductCatalogTemplate } from '@/components/ProductCatalogTemplate';
 import { OsebergFooter } from '@/components/OsebergFooter';
-import { CustomCursor } from '@/components/CustomCursor';
 import { getCatalogBySlug, getAllCatalogSlugs } from '@/lib/models/Catalog';
 
 interface PageProps {
@@ -124,7 +123,6 @@ export default async function CatalogPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
-      <CustomCursor />
       <ProductCatalogTemplate catalog={catalog} />
       <OsebergFooter />
     </>

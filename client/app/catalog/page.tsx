@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import { CatalogOverview } from '@/components/CatalogOverview';
 import { OsebergHeader } from '@/components/OsebergHeader';
 import { OsebergFooter } from '@/components/OsebergFooter';
-import { CustomCursor } from '@/components/CustomCursor';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://osebergexim.vercel.app';
 
@@ -52,7 +51,6 @@ export const metadata: Metadata = {
 export default function CatalogPage() {
   return (
     <>
-      <CustomCursor />
       <OsebergHeader />
       <CatalogOverview />
       <OsebergFooter />
