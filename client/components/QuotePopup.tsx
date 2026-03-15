@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Send, CheckCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 export function QuotePopup() {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,6 +44,7 @@ export function QuotePopup() {
 
     setIsSubmitting(true);
     try {
+      // 1. Submit to Google Sheets via backend
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -57,6 +59,18 @@ export function QuotePopup() {
       if (!response.ok) {
         throw new Error('Failed to submit quote request');
       }
+
+      // 2. Send email notification via EmailJS
+      await emailjs.send(
+        'service_tx9zst3', // Same service as Contact
+        'template_t3xpkkh', // Same template as Contact
+        {
+          name: formData.name,
+          email: formData.email,
+          message: `[QUOTE REQUEST]\n\n${formData.message}`,
+        },
+        'I_qXHhMUPO6HE23NM' // Public Key
+      );
 
       setIsSubmitted(true);
       setTimeout(() => {
@@ -141,9 +155,8 @@ export function QuotePopup() {
                   {[1, 2].map((s) => (
                     <motion.div
                       key={s}
-                      className={`h-2 flex-1 rounded-full ${
-                        s <= step ? 'bg-gradient-to-r from-[#5D7183] to-[#7EA8BE]' : 'bg-[#A7B5C6]/30'
-                      }`}
+                      className={`h-2 flex-1 rounded-full ${s <= step ? 'bg-gradient-to-r from-[#5D7183] to-[#7EA8BE]' : 'bg-[#A7B5C6]/30'
+                        }`}
                       initial={{ scaleX: 0 }}
                       animate={{ scaleX: s <= step ? 1 : 0.3 }}
                       transition={{ duration: 0.3 }}

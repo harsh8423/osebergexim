@@ -25,10 +25,10 @@ interface GoogleSheetsConfig {
  */
 function getSheetsClient() {
   const sheetId = process.env.GOOGLE_SHEET_ID;
-  
+
   // Try to use service account JSON file first (easier and more reliable)
   const serviceAccountJson = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
-  
+
   if (serviceAccountJson) {
     try {
       const credentials = JSON.parse(serviceAccountJson);
@@ -37,7 +37,7 @@ function getSheetsClient() {
         key: credentials.private_key,
         scopes: ['https://www.googleapis.com/auth/spreadsheets'],
       });
-      
+
       const sheets = google.sheets({ version: 'v4', auth });
       return { sheets, sheetId: sheetId! };
     } catch (error) {
@@ -45,7 +45,7 @@ function getSheetsClient() {
       throw new Error('Invalid GOOGLE_SERVICE_ACCOUNT_JSON format. It must be a valid JSON string.');
     }
   }
-  
+
   // Fallback to individual environment variables
   const serviceAccountEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
   let privateKey = process.env.GOOGLE_PRIVATE_KEY;
@@ -61,13 +61,13 @@ function getSheetsClient() {
   // Handle private key formatting
   // Replace escaped newlines with actual newlines
   privateKey = privateKey.replace(/\\n/g, '\n');
-  
+
   // Remove any surrounding quotes if present
   privateKey = privateKey.replace(/^["']|["']$/g, '');
-  
+
   // Trim whitespace
   privateKey = privateKey.trim();
-  
+
   // Ensure the key has proper BEGIN/END markers
   if (!privateKey.includes('BEGIN PRIVATE KEY') && !privateKey.includes('BEGIN RSA PRIVATE KEY')) {
     throw new Error(
@@ -192,11 +192,14 @@ export async function appendSubmission(data: SubmissionData): Promise<void> {
       });
 
       const rows = response.data.values || [];
-      
-      // Check if email exists (skip header row, check column C which is email)
+
+      // Check if email AND type exists (skip header row, check column C and E)
       for (let i = 1; i < rows.length; i++) {
         const row = rows[i];
-        if (row[2] && row[2].toLowerCase().trim() === data.email.toLowerCase().trim()) {
+        const rowEmail = row[2] ? row[2].toLowerCase().trim() : '';
+        const rowType = row[4] ? row[4].toLowerCase().trim() : 'contact';
+
+        if (rowEmail === data.email.toLowerCase().trim() && rowType === data.type.toLowerCase().trim()) {
           emailExists = true;
           existingRowIndex = i + 1; // +1 because Sheets API is 1-indexed
           existingMessage = row[3] || ''; // Column D is message
@@ -213,7 +216,7 @@ export async function appendSubmission(data: SubmissionData): Promise<void> {
     if (emailExists && existingRowIndex > 0) {
       // Email exists - append message to existing message field
       const messageSeparator = '\n\n--- New Message ---\n\n';
-      const updatedMessage = existingMessage 
+      const updatedMessage = existingMessage
         ? `${existingMessage}${messageSeparator}${data.message}`
         : data.message;
 
@@ -371,7 +374,7 @@ export async function appendChatConversation(data: ChatConversationData): Promis
       });
 
       const rows = response.data.values || [];
-      
+
       // Check if email exists (skip header row, check column C which is email)
       // Look for rows with type 'chatbot' or any row with matching email
       for (let i = 1; i < rows.length; i++) {
@@ -396,7 +399,7 @@ export async function appendChatConversation(data: ChatConversationData): Promis
 
     if (emailExists && existingRowIndex > 0) {
       // Email exists with chatbot type - append conversation to existing message field
-      const updatedMessage = existingMessage 
+      const updatedMessage = existingMessage
         ? `${existingMessage}${conversationEntry}`
         : conversationEntry;
 

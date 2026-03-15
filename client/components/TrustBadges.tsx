@@ -38,13 +38,13 @@ const certificatesFiles = [
   {
     id: 1,
     name: 'Udyam Registration Certificate',
-    filename: 'Print _ Udyam Registration Certificate OSBERG.pdf',
+    filename: 'udyam_registration_certificate.pdf',
     description: 'Official MSME Registration Certificate by the Government of India',
   },
   {
     id: 2,
     name: 'SPICE Board Certificate',
-    filename: 'SPICE + Part B_Approval Letter_AB9442405.pdf',
+    filename: 'spice_board_certificate.pdf',
     description: 'Certificate of Registration as Exporter of Spices',
   }
 ];
