@@ -15,7 +15,6 @@ import { OsebergHeader } from "@/components/OsebergHeader";
 import { OsebergHero } from "@/components/OsebergHero";
 import { OsebergProducts } from "@/components/OsebergProducts";
 import { OsebergServices } from "@/components/OsebergServices";
-import { PageLoader } from "@/components/PageLoader";
 import { QuotePopup } from "@/components/QuotePopup";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { Testimonials } from "@/components/Testimonials";
@@ -49,7 +48,6 @@ export default function HomePage() {
 
   return (
     <>
-      <PageLoader />
       <div className="min-h-screen bg-background overflow-x-hidden">
         <ScrollProgress />
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { motion } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 
@@ -15,6 +15,7 @@ interface OsebergHeaderProps {
 
 export function OsebergHeader({ onNavigateToProduct, onNavigateToCatalog }: OsebergHeaderProps = {}) {
   const router = useRouter();
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -27,6 +28,11 @@ export function OsebergHeader({ onNavigateToProduct, onNavigateToCatalog }: Oseb
   }, []);
 
   const scrollToSection = (id: string) => {
+    if (pathname !== '/') {
+      router.push(`/#${id}`);
+      setIsMobileMenuOpen(false);
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -36,9 +42,8 @@ export function OsebergHeader({ onNavigateToProduct, onNavigateToCatalog }: Oseb
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        isScrolled ? 'glass-strong shadow-lg' : 'bg-transparent'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? 'glass-strong shadow-lg' : 'bg-transparent'
+        }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
@@ -46,13 +51,13 @@ export function OsebergHeader({ onNavigateToProduct, onNavigateToCatalog }: Oseb
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-3 sm:py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <motion.div 
+          <motion.div
             className="flex items-center gap-2"
             whileHover={{ scale: 1.05 }}
           >
-            <img 
-              src={logoImage} 
-              alt="Oseberg Exim" 
+            <img
+              src={logoImage}
+              alt="Oseberg Exim"
               className="h-12 sm:h-14 md:h-16 w-auto object-contain"
             />
           </motion.div>
@@ -61,74 +66,67 @@ export function OsebergHeader({ onNavigateToProduct, onNavigateToCatalog }: Oseb
           <div className="hidden md:flex items-center gap-8">
             <button
               onClick={() => scrollToSection('home')}
-              className={`transition-colors ${
-                isScrolled 
-                  ? 'text-[#1D3557] hover:text-[#5D7183]' 
+              className={`transition-colors ${isScrolled
+                  ? 'text-[#1D3557] hover:text-[#5D7183]'
                   : 'text-white hover:text-[#A7B5C6]'
-              }`}
+                }`}
             >
               Home
             </button>
             <button
               onClick={() => scrollToSection('about')}
-              className={`transition-colors ${
-                isScrolled 
-                  ? 'text-[#1D3557] hover:text-[#5D7183]' 
+              className={`transition-colors ${isScrolled
+                  ? 'text-[#1D3557] hover:text-[#5D7183]'
                   : 'text-white hover:text-[#A7B5C6]'
-              }`}
+                }`}
             >
               About
             </button>
             <button
               onClick={() => scrollToSection('products')}
-              className={`transition-colors ${
-                isScrolled 
-                  ? 'text-[#1D3557] hover:text-[#5D7183]' 
+              className={`transition-colors ${isScrolled
+                  ? 'text-[#1D3557] hover:text-[#5D7183]'
                   : 'text-white hover:text-[#A7B5C6]'
-              }`}
+                }`}
             >
               Products
             </button>
-            
+
             {/* Catalog - Direct link to catalog page */}
             <Link
               href="/catalog"
-              className={`transition-colors ${
-                isScrolled 
-                  ? 'text-[#1D3557] hover:text-[#5D7183]' 
+              className={`transition-colors ${isScrolled
+                  ? 'text-[#1D3557] hover:text-[#5D7183]'
                   : 'text-white hover:text-[#A7B5C6]'
-              }`}
+                }`}
             >
               Catalog
             </Link>
-            
+
             <button
               onClick={() => scrollToSection('services')}
-              className={`transition-colors ${
-                isScrolled 
-                  ? 'text-[#1D3557] hover:text-[#5D7183]' 
+              className={`transition-colors ${isScrolled
+                  ? 'text-[#1D3557] hover:text-[#5D7183]'
                   : 'text-white hover:text-[#A7B5C6]'
-              }`}
+                }`}
             >
               Services
             </button>
             <button
               onClick={() => scrollToSection('blog')}
-              className={`transition-colors ${
-                isScrolled 
-                  ? 'text-[#1D3557] hover:text-[#5D7183]' 
+              className={`transition-colors ${isScrolled
+                  ? 'text-[#1D3557] hover:text-[#5D7183]'
                   : 'text-white hover:text-[#A7B5C6]'
-              }`}
+                }`}
             >
               Blog
             </button>
             <button
               onClick={() => scrollToSection('contact')}
-              className={`transition-colors ${
-                isScrolled 
-                  ? 'text-[#1D3557] hover:text-[#5D7183]' 
+              className={`transition-colors ${isScrolled
+                  ? 'text-[#1D3557] hover:text-[#5D7183]'
                   : 'text-white hover:text-[#A7B5C6]'
-              }`}
+                }`}
             >
               Contact
             </button>
@@ -145,9 +143,8 @@ export function OsebergHeader({ onNavigateToProduct, onNavigateToCatalog }: Oseb
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`md:hidden p-2 touch-manipulation transition-colors ${
-              isScrolled ? 'text-[#1D3557]' : 'text-white'
-            }`}
+            className={`md:hidden p-2 touch-manipulation transition-colors ${isScrolled ? 'text-[#1D3557]' : 'text-white'
+              }`}
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? <X size={24} className="sm:w-7 sm:h-7" /> : <Menu size={24} className="sm:w-7 sm:h-7" />}
@@ -180,7 +177,7 @@ export function OsebergHeader({ onNavigateToProduct, onNavigateToCatalog }: Oseb
             >
               Products
             </button>
-            
+
             {/* Catalog - Direct link */}
             <Link
               href="/catalog"
@@ -189,7 +186,7 @@ export function OsebergHeader({ onNavigateToProduct, onNavigateToCatalog }: Oseb
             >
               Catalog
             </Link>
-            
+
             <button
               onClick={() => scrollToSection('services')}
               className="block w-full text-left text-[#1D3557] hover:text-[#5D7183] transition-colors py-2"

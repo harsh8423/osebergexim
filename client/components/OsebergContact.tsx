@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
-import { Mail, Phone, MapPin, Send, CheckCircle, MessageCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle, MessageCircle, Calendar } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 export function OsebergContact() {
   const [formData, setFormData] = useState({
@@ -8,14 +9,21 @@ export function OsebergContact() {
     email: '',
     message: '',
   });
+  const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formRef.current) return;
+
     setIsSubmitting(true);
+    setError('');
+
     try {
-      const response = await fetch('/api/contact', {
+      // 1. Existing functionality - Submit to Google Sheets (Backend)
+      const apiResponse = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -26,15 +34,27 @@ export function OsebergContact() {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to submit contact request');
+      if (!apiResponse.ok) {
+        throw new Error('Failed to submit contact request to database');
       }
 
+      // 2. New Functionality - Send email notification via EmailJS
+      await emailjs.sendForm(
+        'service_tx9zst3',
+        'template_t3xpkkh',
+        formRef.current,
+        { publicKey: 'I_qXHhMUPO6HE23NM' }
+      );
+
+      // Handle Success
       setIsSubmitted(true);
       setFormData({ name: '', email: '', message: '' });
+      if (formRef.current) formRef.current.reset();
+
       setTimeout(() => setIsSubmitted(false), 3000);
-    } catch (error) {
-      console.error(error);
+    } catch (err: any) {
+      console.error(err);
+      setError(`Failed to send: ${err.message || 'Please try again'}`);
     } finally {
       setIsSubmitting(false);
     }
@@ -42,6 +62,10 @@ export function OsebergContact() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const openCalendly = () => {
+    window.open('https://calendly.com/vijay-osebergexim/30min', '_blank');
   };
 
   return (
@@ -124,8 +148,8 @@ export function OsebergContact() {
                   </div>
                   <div>
                     <div className="font-semibold text-sm sm:text-base text-[#1D3557] mb-1">Phone</div>
-                    <a href="tel:+916280550369" className="text-xs sm:text-sm md:text-base text-[#5D7183] hover:text-[#7EA8BE] transition-colors">
-                      +91 6280550369
+                    <a href="tel:+919878221440" className="text-xs sm:text-sm md:text-base text-[#5D7183] hover:text-[#7EA8BE] transition-colors">
+                      +91 9878221440
                     </a>
                   </div>
                 </div>
@@ -148,7 +172,7 @@ export function OsebergContact() {
 
             {/* WhatsApp */}
             <motion.a
-              href="https://wa.me/916280550369?text=Hello%20Oseberg%20Exim!%20I%20would%20like%20to%20inquire%20about%20your%20products."
+              href="https://wa.me/919878221440?text=Hello%20Oseberg%20Exim!%20I%20would%20like%20to%20inquire%20about%20your%20products."
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ y: -5, rotateX: 5 }}
@@ -165,6 +189,33 @@ export function OsebergContact() {
                 </p>
               </div>
             </motion.a>
+
+            {/* Calendly Demo Card (Themed) */}
+            <motion.div
+              whileHover={{ y: -5, rotateX: 5 }}
+              className="glass-strong p-5 sm:p-8 rounded-xl sm:rounded-2xl perspective"
+              style={{ transformStyle: 'preserve-3d' }}
+            >
+              <div className="relative z-10 flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-[#5D7183] to-[#7EA8BE] rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <Calendar className="text-white" size={24} />
+                </div>
+                <div className="text-center sm:text-left w-full">
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#1D3557] mb-2">Schedule a Meet</h3>
+                  <p className="text-sm sm:text-base text-[#5D7183] mb-6 leading-relaxed">
+                    Book a quick 30-minute interactive session to discuss your bulk export requirements and discover our workflow.
+                  </p>
+                  <button
+                    onClick={openCalendly}
+                    type="button"
+                    className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-[#1D3557] hover:bg-[#2A4A7A] transition-colors text-white font-semibold rounded-xl shadow-md flex items-center justify-center gap-2 group"
+                  >
+                    <span>Schedule Demo</span>
+                    <span className="text-lg group-hover:translate-x-1 transition-transform">→</span>
+                  </button>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* Contact Form */}
@@ -174,7 +225,19 @@ export function OsebergContact() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <form onSubmit={handleSubmit} className="glass-strong p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl space-y-4 sm:space-y-6">
+            <form ref={formRef} onSubmit={handleSubmit} className="glass-strong p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl space-y-4 sm:space-y-6 flex flex-col h-full justify-center">
+              {error && (
+                <div className="p-3 sm:p-4 bg-red-50/80 border border-red-200 text-red-600 rounded-xl text-sm mb-2 font-medium">
+                  {error}
+                </div>
+              )}
+              {isSubmitted && (
+                <div className="p-3 sm:p-4 bg-green-50/80 border border-green-200 text-green-600 rounded-xl text-sm mb-2 font-medium flex items-center gap-2">
+                  <CheckCircle size={18} />
+                  Email sent successfully! We will get back to you soon.
+                </div>
+              )}
+
               <div>
                 <label htmlFor="name" className="block text-sm sm:text-base text-[#1D3557] mb-2">
                   Full Name *

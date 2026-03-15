@@ -33,10 +33,10 @@ export function OsebergHero() {
       >
         <source src="/video1.mp4" type="video/mp4" />
       </video>
-      
+
       {/* Dark overlay for blackish opacity */}
       <div className="absolute inset-0 bg-black/60"></div>
-      
+
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Floating particles */}
@@ -96,7 +96,7 @@ export function OsebergHero() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-6 sm:space-y-8 max-w-4xl text-center"
+            className="space-y-6 sm:space-y-8 w-full max-w-7xl mx-auto text-center px-4"
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -111,20 +111,18 @@ export function OsebergHero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-white w-full mx-auto"
             >
-              Sourcing Excellence.
-              <span className="block text-white/90">Exporting Trust.</span>
+              The world is open.
+              <span className="text-white/90 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold ml-2">
+                Let Oseberg take you there with{" "}
+                <span className="text-[#D6A85E] italic">trust</span>,{" "}
+                <span className="text-[#D6A85E] italic">transparency</span>, and{" "}
+                <span className="text-[#D6A85E] italic">trade expertise</span>.
+              </span>
             </motion.h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed"
-            >
-              Oseberg Exim delivers India's finest agricultural products, spices, makhana, coffee, and tea to global markets with unmatched quality, consistency, and reliability.
-            </motion.p>
+
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -141,7 +139,7 @@ export function OsebergHero() {
                 Request a Quote
                 <ArrowRight size={18} className="sm:w-5 sm:h-5" />
               </motion.button>
-              
+
               <motion.button
                 onClick={() => scrollToSection('products')}
                 className="px-6 py-3 sm:px-8 sm:py-4 bg-white/10 backdrop-blur-sm text-white rounded-full border border-white/30 flex items-center justify-center gap-2 text-sm sm:text-base font-medium hover:bg-white/20 transition-colors"

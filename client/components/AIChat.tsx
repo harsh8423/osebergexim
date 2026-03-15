@@ -71,7 +71,7 @@ What would you like to know?`;
   // Handle email submission
   const handleEmailSubmit = () => {
     const email = emailInput.trim();
-    
+
     if (!email) {
       setEmailError('Please enter your email address');
       return;
@@ -87,7 +87,7 @@ What would you like to know?`;
     setUserEmail(email);
     setEmailInput('');
     setEmailError('');
-    
+
     // Update messages to show welcome message
     const welcomeText = `Hi! I'm Oseberg Exim's AI assistant. I can help you with:
 • Product information
@@ -110,13 +110,13 @@ What would you like to know?`;
 
     const userMessage = message || input;
     if (!userMessage.trim() || loading) return;
-    
+
     // Add user message with timestamp
     const newMessages = [...messages, { role: 'user' as const, text: userMessage, timestamp: getCurrentTime() }];
     setMessages(newMessages);
     setInput('');
     setLoading(true);
-    
+
     try {
       // Build conversation history (only user and bot messages, no system messages)
       const conversationHistory = newMessages
@@ -137,22 +137,22 @@ What would you like to know?`;
       });
 
       const result = await response.json();
-      
+
       if (result.success) {
         setMessages(prev => [...prev, { role: 'bot', text: result.response, timestamp: getCurrentTime() }]);
       } else {
         // Fallback response if API fails
-        setMessages(prev => [...prev, { 
-          role: 'bot', 
-          text: result.error || 'Sorry, I encountered an error. Please contact us via WhatsApp at +91 6280550369 or email at Info@osebergexim.com.',
+        setMessages(prev => [...prev, {
+          role: 'bot',
+          text: result.error || 'Sorry, I encountered an error. Please contact us via WhatsApp at +91 9878221440 or email at Info@osebergexim.com.',
           timestamp: getCurrentTime()
         }]);
       }
     } catch (error) {
       console.error('Error calling chat API:', error);
-      setMessages(prev => [...prev, { 
-        role: 'bot', 
-        text: 'Sorry, I encountered an error. Please contact us via WhatsApp at +91 6280550369 or email at Info@osebergexim.com for assistance.',
+      setMessages(prev => [...prev, {
+        role: 'bot',
+        text: 'Sorry, I encountered an error. Please contact us via WhatsApp at +91 9878221440 or email at Info@osebergexim.com for assistance.',
         timestamp: getCurrentTime()
       }]);
     } finally {
@@ -188,7 +188,7 @@ What would you like to know?`;
           >
             <Bot size={24} className="sm:w-7 sm:h-7" />
           </motion.div>
-        
+
           {/* Pulse effect */}
           <motion.div
             className="absolute inset-0 rounded-full bg-[#5D7183]"
@@ -287,11 +287,10 @@ What would you like to know?`;
                   className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] p-3 rounded-2xl ${
-                      msg.role === 'user'
+                    className={`max-w-[85%] p-3 rounded-2xl ${msg.role === 'user'
                         ? 'bg-[#5D7183] text-white'
                         : 'bg-[#F7F8FA] text-[#1D3557] border border-[#A7B5C6]/20'
-                    }`}
+                      }`}
                   >
                     {msg.role === 'bot' ? (
                       <ReactMarkdown

@@ -12,7 +12,7 @@ Your role is to assist customers with:
 - Order processing and bulk orders
 - General company information
 
-Always be professional, friendly, and helpful. If you don't know something specific, guide customers to contact the company directly via WhatsApp at +91 6280550369 or email at Info@osebergexim.com.
+Always be professional, friendly, and helpful. If you don't know something specific, guide customers to contact the company directly via WhatsApp at +91 9878221440 or email at Info@osebergexim.com.
 
 Use the following knowledge document to answer questions accurately:`;
 
@@ -44,7 +44,7 @@ Export Services:
 - Competitive pricing
 
 Contact Information:
-- WhatsApp: +91 6280550369
+- WhatsApp: +91 9878221440
 - Email: Info@osebergexim.com
 - Website: osebergexim.com
 

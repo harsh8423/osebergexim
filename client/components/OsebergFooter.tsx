@@ -67,9 +67,9 @@ export function OsebergFooter() {
             className="space-y-4"
           >
             <div className="mb-3 sm:mb-4">
-              <img 
-                src={logoImage} 
-                alt="Oseberg Exim" 
+              <img
+                src={logoImage}
+                alt="Oseberg Exim"
                 className="h-12 sm:h-14 md:h-16 w-auto object-contain brightness-0 invert"
               />
             </div>
@@ -78,16 +78,16 @@ export function OsebergFooter() {
             </p>
             <div className="flex gap-2 sm:gap-3 pt-3 sm:pt-4">
               {[
-                { icon: Facebook, href: '#' },
-                { icon: Twitter, href: '#' },
-                { icon: Linkedin, href: '#' },
-                { icon: Instagram, href: '#' },
+                { icon: Twitter, href: 'https://x.com/Osebergexim', target: '_blank' },
+                { icon: Linkedin, href: 'https://www.linkedin.com/company/oseberg-exim-private-limited', target: '_blank' },
+                { icon: Instagram, href: 'https://www.instagram.com/osebergexim', target: '_blank' },
               ].map((social, index) => {
                 const Icon = social.icon;
                 return (
                   <motion.a
                     key={index}
                     href={social.href}
+                    target={social.target}
                     whileHover={{ scale: 1.2, rotate: 5 }}
                     whileTap={{ scale: 0.9 }}
                     className="w-9 h-9 sm:w-10 sm:h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#5D7183] transition-colors touch-manipulation"
@@ -172,8 +172,8 @@ export function OsebergFooter() {
               </li>
               <li className="flex items-start gap-2 sm:gap-3">
                 <Phone size={18} className="text-[#D6A85E] flex-shrink-0 mt-0.5 sm:mt-1" />
-                <a href="tel:+916280550369" className="text-xs sm:text-sm md:text-base text-[#A7B5C6] hover:text-white transition-colors break-all">
-                  +91 6280550369
+                <a href="tel:+919878221440" className="text-xs sm:text-sm md:text-base text-[#A7B5C6] hover:text-white transition-colors break-all">
+                  +91 9878221440
                 </a>
               </li>
               <li className="flex items-start gap-2 sm:gap-3">
@@ -198,15 +198,6 @@ export function OsebergFooter() {
               © {currentYear} Oseberg Exim. All rights reserved.
             </p>
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
-              <a href="#" className="text-[#A7B5C6] hover:text-white transition-colors touch-manipulation">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-[#A7B5C6] hover:text-white transition-colors touch-manipulation">
-                Terms of Service
-              </a>
-              <a href="#" className="text-[#A7B5C6] hover:text-white transition-colors touch-manipulation">
-                Cookie Policy
-              </a>
             </div>
           </div>
         </motion.div>
